@@ -22,23 +22,18 @@ namespace ECommerce.Controllers
         {
             if (numeroPage != 0)
             {
-                int nbPages = repos.Produits.Count() / NombreProduitParPages, i = 0, j = 0;
-                List<List<Produit>> produits = new List<List<Produit>>();
-                produits.Add(new List<Produit>());
-                foreach (Produit p in repos.Produits)
+                int nbPages = repos.Produits.Count() / NombreProduitParPages;
+                if(numeroPage <= nbPages)
                 {
-                    produits[i].Add(p);
-                    j++;
-                    if (j == NombreProduitParPages)
-                    {
-                        i++;
-                        j = 0;
-                        produits.Add(new List<Produit>());
-                    }
+                    List<Produit> produits = repos.Produits.ToList();
+                    return View("ProduitView", repos.Produits.Where(p => p.ProductID >= produits[(numeroPage - 1) * NombreProduitParPages].ProductID && p.ProductID <= produits[((numeroPage - 1) * NombreProduitParPages + NombreProduitParPages) -1].ProductID).ToList());
                 }
-                return View("ProduitView", produits[numeroPage - 1]);
+                else
+                {
+                    return View("404");
+                }
             }
-            return View("ProduitView", repos.Produits.ToList<Produit>());
+            return View("ProduitView", new List<Produit>());
         }
     }
 }
