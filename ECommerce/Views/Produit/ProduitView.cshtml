@@ -1,14 +1,17 @@
-﻿@model List<Produit>
+﻿@model ECommerce.Models.ViewModels.ListeProduitsViewModels
 @{ 
     ViewBag.Title = "E-Commerce";
 } 
-@foreach(Produit p in Model)
+@if (Model != null)
 {
-    <div class="produitPanel">
-            <h3>@p.Nom</h3>
-            <img src="~/images/ajouter-ecommerce-panier-boutique-en-ligne-icone-6203-48.png" width="48" height="48"  class="pannier"/>
-            Catégorie : @p.Categorie  <br /><br />
-            Prix : @p.Prix &euro;<br /><br />
-            Description : @p.Description<br /><br />
-    </div>
+    @foreach (Produit p in Model.GetListeProduit())
+    {
+        <div class="produitPanel">
+                <h3>@p.Nom</h3>
+                <img src="~/images/ajouter-ecommerce-panier-boutique-en-ligne-icone-6203-48.png" width="48" height="48"  class="pannier"/>
+                Catégorie : @p.Categorie  <br /><br />
+                Prix : @p.Prix &euro;<br /><br />
+                Description : @p.Description<br /><br />
+        </div>
+    }
 }
