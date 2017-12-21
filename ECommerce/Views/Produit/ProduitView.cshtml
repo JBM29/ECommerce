@@ -1,0 +1,14 @@
+﻿@model List<Produit>
+@{ 
+    ViewBag.Title = "E-Commerce";
+} 
+@foreach(Produit p in Model)
+{
+    <div class="produitPanel">
+            <h3>@p.Nom</h3>
+            <img src="~/images/ajouter-ecommerce-panier-boutique-en-ligne-icone-6203-48.png" width="48" height="48"  class="pannier"/>
+            Catégorie : @p.Categorie  <br /><br />
+            Prix : @p.Prix &euro;<br /><br />
+            Description : @p.Description<br /><br />
+    </div>
+}
