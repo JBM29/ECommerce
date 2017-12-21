@@ -30,12 +30,12 @@ namespace ECommerce.Controllers
         {
             if (numeroPage != 0)
             {
-                int nbPages = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(repos.Produits.Count()) / Convert.ToDouble(model.GetPaginationInfo().ProduitsParPage)));
+                int nbPages = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(repos.Produits.Count()) / Convert.ToDouble(model.PaginationInfo.ProduitsParPage)));
                 if(numeroPage <= nbPages)
                 {
                     List<Produit> produits = repos.Produits.ToList();
-                    model.GetPaginationInfo().PageCourante = numeroPage;
-                    model.Update(repos.Produits.Where(p => p.ProductID >= produits[(numeroPage - 1) * model.GetPaginationInfo().ProduitsParPage].ProductID && p.ProductID <= produits[((numeroPage - 1) * model.GetPaginationInfo().ProduitsParPage + model.GetPaginationInfo().ProduitsParPage) - 1].ProductID).ToList());
+                    model.PaginationInfo.PageCourante = numeroPage;
+                    model.Update(repos.Produits.Where(p => p.ProductID >= produits[(numeroPage - 1) * model.PaginationInfo.ProduitsParPage].ProductID && p.ProductID <= produits[((numeroPage - 1) * model.PaginationInfo.ProduitsParPage + model.PaginationInfo.ProduitsParPage) - 1].ProductID).ToList());
                     return View("ProduitView", model);
                 }
                 else

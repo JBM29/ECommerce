@@ -8,21 +8,16 @@ namespace ECommerce.Models.ViewModels
     public class ListeProduitsViewModels
     {
         private List<Produit> produits;
-        private PaginationInfo pagination;
+        public PaginationInfo PaginationInfo;
 
         public ListeProduitsViewModels(PaginationInfo info)
         {
-            pagination = info;
+            PaginationInfo = info;
         }
 
         public void Update(List<Produit> p)
         {
             produits = p;
-        }
-
-        public PaginationInfo GetPaginationInfo()
-        {
-            return pagination;
         }
 
         public List<Produit> GetListeProduit()
