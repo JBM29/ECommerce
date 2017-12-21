@@ -26,24 +26,25 @@ namespace ECommerce.Controllers
             model = new ListeProduitsViewModels(info);
         }
 
-        public ViewResult List(int numeroPage)
+        public ViewResult List(int n)
         {
-            if (numeroPage != 0)
+            int numeroPage = Convert.ToInt32(HttpContext.Request.Query["productPage"]);
+            int nbPages = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(repos.Produits.Count()) / Convert.ToDouble(model.PaginationInfo.ProduitsParPage)));
+            if(numeroPage == 0)
             {
-                int nbPages = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(repos.Produits.Count()) / Convert.ToDouble(model.PaginationInfo.ProduitsParPage)));
-                if(numeroPage <= nbPages)
-                {
-                    List<Produit> produits = repos.Produits.ToList();
-                    model.PaginationInfo.PageCourante = numeroPage;
-                    model.Update(repos.Produits.Where(p => p.ProductID >= produits[(numeroPage - 1) * model.PaginationInfo.ProduitsParPage].ProductID && p.ProductID <= produits[((numeroPage - 1) * model.PaginationInfo.ProduitsParPage + model.PaginationInfo.ProduitsParPage) - 1].ProductID).ToList());
-                    return View("ProduitView", model);
-                }
-                else
-                {
-                    return View("404");
-                }
+                numeroPage = 1;
             }
-            return View("ProduitView", null);
+            if (numeroPage <= nbPages)
+            {
+                List<Produit> produits = repos.Produits.ToList();
+                model.PaginationInfo.PageCourante = numeroPage;
+                model.Update(repos.Produits.Where(p => p.ProductID >= produits[(numeroPage - 1) * model.PaginationInfo.ProduitsParPage].ProductID && p.ProductID <= produits[((numeroPage - 1) * model.PaginationInfo.ProduitsParPage + model.PaginationInfo.ProduitsParPage) - 1].ProductID).ToList());
+                return View("ProduitView", model);
+            }
+            else
+            {
+                return View("404");
+            }
         }
     }
 }
