@@ -7,9 +7,9 @@ namespace ECommerce.Models.ViewModels
 {
     public class PaginationInfo
     {
-        public int NombreProduits { get; }
-        public int ProduitsParPage { get; }
-        public int PageCourante { get; }
+        public int NombreProduits { get; set; }
+        public int ProduitsParPage { get; set; }
+        public int PageCourante { get; set; }
 
         public int GetCountOfPage()
         {
